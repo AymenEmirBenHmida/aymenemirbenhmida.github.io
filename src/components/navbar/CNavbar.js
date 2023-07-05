@@ -55,31 +55,30 @@ function CNavbar({ color }) {
  
     const handleDownloadFile = async () =>
     {
-      fetch( "http://localhost:3001/download/" ).then( ( response ) =>
-      {
-        if(!response.ok)
-        {
-          throw new Error( "HTTP error " + response.status );
-        }
-        return response.blob();
-      } ).then( ( blob ) =>
-      {
+      fetch(
+        "https://personal-website-aymen-95f3e75d1692.herokuapp.com/download/"
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("HTTP error " + response.status);
+          }
+          return response.blob();
+        })
+        .then((blob) => {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
 
-        const url = URL.createObjectURL( blob );
-        const link = document.createElement( "a" );
-        link.href = url;
+          link.download = "AymenBenHamida__CV.pdf";
+          document.body.appendChild(link);
+          link.click();
 
-        link.download = "AymenBenHamida__CV.pdf";
-        document.body.appendChild( link );
-        link.click();
-
-        URL.revokeObjectURL( url );
-        document.body.removeChild( link );
-
-      } ).catch( ( error ) =>
-      {
-        console.error( error );
-      });
+          URL.revokeObjectURL(url);
+          document.body.removeChild(link);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
 
   
