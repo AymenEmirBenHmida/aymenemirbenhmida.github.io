@@ -14,14 +14,14 @@ import { useHistory } from "react-router-dom";
 function CNavbar({ color }) {
   const [activeRoute, setActiveRoute] = useState("home");
   const [scrolled, setScrolled] = useState(false);
-  const [ showSidebar, setShowSidebar ] = useState( false );
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const isMobile = window.innerWidth <= 768;
   const navigate = useNavigate();
 
- const handleCloseSidebar = () => {
-   setShowSidebar(false);
- };
+  const handleCloseSidebar = () => {
+    setShowSidebar(false);
+  };
   useEffect(() => {
     const onScroll = () => {
       if (window.scrollY > 50) {
@@ -52,36 +52,31 @@ function CNavbar({ color }) {
     navigate(route);
   }
 
- 
-    const handleDownloadFile = async () =>
-    {
-      fetch(
-        "https://personal-website-aymen-95f3e75d1692.herokuapp.com/download/"
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("HTTP error " + response.status);
-          }
-          return response.blob();
-        })
-        .then((blob) => {
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement("a");
-          link.href = url;
+  const handleDownloadFile = async () => {
+    fetch("https://personal-website-aymen-95f3e75d1692.herokuapp.com/download/")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("HTTP error " + response.status);
+        }
+        return response.blob();
+      })
+      .then((blob) => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
 
-          link.download = "AymenBenHamida__CV.pdf";
-          document.body.appendChild(link);
-          link.click();
+        link.download = "AymenBenHamida__CV.pdf";
+        document.body.appendChild(link);
+        link.click();
 
-          URL.revokeObjectURL(url);
-          document.body.removeChild(link);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
+        URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-  
   return (
     <Navbar
       key="sm"
@@ -154,13 +149,13 @@ function CNavbar({ color }) {
                 </Button>
               )}
             </Nav>
-            <Form className="d-flex">
+            <div className="d-flex">
               <span className="navbar-text">
                 <button className="vvd" onClick={handleDownloadFile}>
                   <span>CV</span>
                 </button>
               </span>
-            </Form>
+            </div>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
       </Container>
